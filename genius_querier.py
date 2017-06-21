@@ -27,9 +27,13 @@ def query(artist_name, song_title):
 			song_info = hit
 			print("Success!")
 			break
+		else:
+			print("Not found. Try again?")
 	if song_info:
 		song_api_path = song_info["result"]["api_path"]
 		get_song_info(song_api_path, headers)
+	else:
+		input_info()
 
 def get_song_info(song_api_path, headers):
 	song_url = base_url + song_api_path
@@ -84,10 +88,11 @@ def count_words(lyrics):
 	blob = TextBlob(lyrics, tokenizer = tokenizer)
 	k = 0
 	for i in blob.tokens:
-		new_blob = TextBlob(i)
+		new_blob = TextBlob(i).lower()
+		print(new_blob.tags)
 		for j in new_blob.words:
 			j.lemmatize()
-			if j == "I":
+			if j == "i":
 				num_I += 1
 			elif j == "me":
 				num_me += 1
