@@ -22,17 +22,15 @@ def query(artist_name, song_title):
 	json = response.json()
 	song_info = None
 	for hit in json["response"]["hits"]:
-		print("iterating through hits")
 		if hit["result"]["primary_artist"]["name"] == artist_name:
 			song_info = hit
 			print("Success!")
 			break
-		else:
-			print("Not found. Try again?")
 	if song_info:
 		song_api_path = song_info["result"]["api_path"]
 		get_song_info(song_api_path, headers)
 	else:
+		print("Not found. Try again?")
 		input_info()
 
 def get_song_info(song_api_path, headers):
